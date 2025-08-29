@@ -100,77 +100,87 @@ export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGen
       {currentUser && <AccountStatus user={currentUser} />}
 
       {/* Hero Section */}
-      <motion.section 
-        className="text-center pt-8 sm:pt-12"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-text-primary mb-4">
-          Stop Menebak,
-          <span className="block bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-            Mulai Konversi.
-          </span>
-        </h1>
-        <p className="max-w-2xl mx-auto text-lg text-text-secondary mb-8">
-          Ubah ide jadi skrip video viral untuk TikTok Shop & Shopee Affiliate. Dirancang untuk FYP dan memaksimalkan konversi.
-        </p>
-        <motion.div 
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-        >
-            <motion.div variants={itemVariants}>
-                <Button onClick={onNavigateToGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
-                <GenerateIcon className="mr-2" />
-                Buat Script
-                </Button>
-            </motion.div>
-            <motion.div variants={itemVariants}>
-                <Button onClick={onNavigateToContentPlanner} size="lg" variant="primary" className="w-full sm:w-auto shadow-lg shadow-primary/30">
-                    <CalendarIcon className="mr-2" />
-                    Perencana Konten AI
-                </Button>
-            </motion.div>
-             <motion.div variants={itemVariants}>
-                <Button onClick={onNavigateToMarketResearch} size="lg" variant="secondary" className="w-full sm:w-auto">
-                    <SearchTrendingIcon className="mr-2" />
-                    Riset Pasar AI
-                </Button>
-             </motion.div>
-             <motion.div variants={itemVariants}>
-                <Button onClick={onNavigateToImageStudio} size="lg" variant="secondary" className="w-full sm:w-auto">
-                    <ImageEditIcon className="mr-2" />
-                    AI Image Studio
-                </Button>
-             </motion.div>
-             <motion.div variants={itemVariants}>
-                <Button onClick={onNavigateToLinkGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
-                    <LinkIcon className="mr-2" />
-                    Skrip Link Produk
-                </Button>
-             </motion.div>
-             <motion.div variants={itemVariants}>
-                <Button onClick={onNavigateToHookGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
-                    <MagnetIcon className="mr-2" />
-                    Hook Generator
-                </Button>
-             </motion.div>
-             <motion.div variants={itemVariants}>
-                <Button onClick={onNavigateToAngleGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
-                    <CompassIcon className="mr-2" />
-                    Angle Generator
-                </Button>
-             </motion.div>
-             <motion.div variants={itemVariants}>
-                <Button onClick={onNavigateToHashtagGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
-                    <HashtagIcon className="mr-2" />
-                    Hashtag Generator
-                </Button>
-             </motion.div>
-        </motion.div>
-      </section>
+    <motion.section 
+  className="text-center pt-8 sm:pt-12"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+>
+  <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-text-primary mb-4">
+    Stop Menebak,
+    <span className="block bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+      Mulai Konversi.
+    </span>
+  </h1>
+
+  <p className="max-w-2xl mx-auto text-lg text-text-secondary mb-8">
+    Ubah ide jadi skrip video viral untuk TikTok Shop & Shopee Affiliate. Dirancang untuk FYP dan memaksimalkan konversi.
+  </p>
+
+  <motion.div 
+    className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap"
+    variants={containerVariants}
+    initial="hidden"
+    animate="visible"
+  >
+    <motion.div variants={itemVariants}>
+      <Button onClick={onNavigateToGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
+        <GenerateIcon className="mr-2" />
+        Buat Script
+      </Button>
+    </motion.div>
+
+    <motion.div variants={itemVariants}>
+      <Button onClick={onNavigateToContentPlanner} size="lg" variant="primary" className="w-full sm:w-auto shadow-lg shadow-primary/30">
+        <CalendarIcon className="mr-2" />
+        Perencana Konten AI
+      </Button>
+    </motion.div>
+
+    <motion.div variants={itemVariants}>
+      <Button onClick={onNavigateToMarketResearch} size="lg" variant="secondary" className="w-full sm:w-auto">
+        <SearchTrendingIcon className="mr-2" />
+        Riset Pasar AI
+      </Button>
+    </motion.div>
+
+    <motion.div variants={itemVariants}>
+      <Button onClick={onNavigateToImageStudio} size="lg" variant="secondary" className="w-full sm:w-auto">
+        <ImageEditIcon className="mr-2" />
+        AI Image Studio
+      </Button>
+    </motion.div>
+
+    <motion.div variants={itemVariants}>
+      <Button onClick={onNavigateToLinkGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
+        <LinkIcon className="mr-2" />
+        Skrip Link Produk
+      </Button>
+    </motion.div>
+
+    <motion.div variants={itemVariants}>
+      <Button onClick={onNavigateToHookGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
+        <MagnetIcon className="mr-2" />
+        Hook Generator
+      </Button>
+    </motion.div>
+
+    <motion.div variants={itemVariants}>
+      <Button onClick={onNavigateToAngleGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
+        <CompassIcon className="mr-2" />
+        Angle Generator
+      </Button>
+    </motion.div>
+
+    <motion.div variants={itemVariants}>
+      <Button onClick={onNavigateToHashtagGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
+        <HashtagIcon className="mr-2" />
+        Hashtag Generator
+      </Button>
+    </motion.div>
+  </motion.div>
+</motion.section>
+
 
       {/* Features Section */}
       <motion.section
