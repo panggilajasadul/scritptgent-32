@@ -5,10 +5,8 @@ import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import ScriptGenerator from './components/ScriptGenerator';
 import HistoryView from './components/HistoryView';
-import TemplatesView from './components/TemplatesView';
 import LinkScriptGenerator from './components/LinkScriptGenerator';
 import HookGeneratorView from './components/HookGeneratorView';
-import Hook3DetikGenerator from './components/Hook3DetikGenerator';
 import PersonalBrandView from './components/PersonalBrandView';
 import { HomeView } from './components/HomeView';
 import LoginView from './components/LoginView';
@@ -17,8 +15,6 @@ import { View, User, InitialGeneratorData, ContentPlanDay, Quote } from './types
 import { useToast } from './hooks/useToast';
 import { ToastProvider } from './components/ui/Toast';
 import AngleGeneratorView from './components/AngleGeneratorView';
-import HashtagGeneratorView from './components/HashtagGeneratorView';
-import VideoGeneratorView from './components/VideoGeneratorView';
 import { authService } from './services/authService';
 import { MobileMenu } from './components/MobileMenu';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -26,16 +22,14 @@ import ContentPlannerView from './components/ContentPlannerView';
 import QuoteModal from './components/QuoteModal';
 import { settingsService } from './services/settingsService';
 import { quoteService } from './services/quoteService';
-import MarketResearchView from './components/MarketResearchView';
 import DirectMessageModal from './components/DirectMessageModal';
-import ImageStudioView from './components/ImageStudioView';
 import { apiKeyService } from './services/apiKeyService';
 import { isSupabaseConnected } from './services/supabaseClient';
 import Spinner from './components/ui/Spinner';
 
 const AppContent: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [navigationStack, setNavigationStack] = useState<View[]>(['home']);
+  const [currentView, setCurrentView] = useState<View>('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [sessionSeenMessageId, setSessionSeenMessageId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,38 +41,47 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     const checkUserSession = async () => {
       setIsLoading(true);
-      await authService.initialize(); // Initialize local storage with default users if needed
+      await authService.initialize();
       const user = await authService.getCurrentUser();
       setCurrentUser(user);
 
+      let initialView: View = 'login';
       if (user) {
-         if (user.role === 'admin') {
-           setNavigationStack(['admin-dashboard']);
-         } else {
-            setNavigationStack(['home']);
-         }
-      } else {
-        setNavigationStack(['login']);
+        initialView = user.role === 'admin' ? 'admin-dashboard' : 'home';
       }
+      
+      setCurrentView(initialView);
+      // Set initial state in browser history
+      window.history.replaceState({ view: initialView }, '');
       setIsLoading(false);
     };
 
     checkUserSession();
+
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && event.state.view) {
+        setCurrentView(event.state.view);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, []);
 
   const handleLoginSuccess = useCallback((user: User) => {
     setCurrentUser(user);
-    if (user.role === 'admin') {
-      setNavigationStack(['admin-dashboard']);
-    } else {
-      setNavigationStack(['home']);
-    }
+    const nextView = user.role === 'admin' ? 'admin-dashboard' : 'home';
+    setCurrentView(nextView);
+    window.history.pushState({ view: nextView }, '');
   }, []);
 
   const handleLogout = useCallback(async () => {
     await authService.logout();
     setCurrentUser(null);
-    setNavigationStack(['login']);
+    setCurrentView('login');
+    window.history.pushState({ view: 'login' }, '');
   }, []);
 
   useEffect(() => {
@@ -97,18 +100,18 @@ const AppContent: React.FC = () => {
     }
   };
 
-  const currentView = useMemo(() => {
-    if (isLoading) return 'loading';
-    if (!currentUser) return 'login';
-    return navigationStack[navigationStack.length - 1] || 'home';
-  }, [navigationStack, currentUser, isLoading]);
+  // Scroll to top on view change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentView]);
   
   const navigateTo = useCallback((view: View) => {
     if (view.startsWith('admin') && currentUser?.role !== 'admin') {
       addToast("You don't have permission to access this page.");
       return;
     }
-    setNavigationStack(prevStack => [...prevStack, view]);
+    setCurrentView(view);
+    window.history.pushState({ view: view }, '');
     setIsMobileMenuOpen(false); // Close mobile menu on navigation
   }, [currentUser, addToast]);
   
@@ -161,28 +164,22 @@ const AppContent: React.FC = () => {
 
 
   const handleGoHome = useCallback(() => {
-    if(currentUser?.role === 'admin') {
-      setNavigationStack(['admin-dashboard']);
-    } else {
-      setNavigationStack(['home']);
-    }
-  }, [currentUser]);
+    const homeView = currentUser?.role === 'admin' ? 'admin-dashboard' : 'home';
+    navigateTo(homeView);
+  }, [currentUser, navigateTo]);
   
   const handleBack = useCallback(() => {
-    setNavigationStack(prevStack => {
-      if (prevStack.length > 1) {
-        return prevStack.slice(0, -1);
-      }
-      return prevStack;
-    });
+    window.history.back();
+    window.scrollTo(0, 0);
   }, []);
 
-  const setCurrentView = (view: View) => {
+  const handleSetCurrentView = (view: View) => {
     if (view === currentView) {
       setIsMobileMenuOpen(false);
       return;
     };
     navigateTo(view);
+    window.scrollTo(0, 0);
   };
 
   const renderView = (): React.ReactNode => {
@@ -204,12 +201,7 @@ const AppContent: React.FC = () => {
                   onNavigateToLinkGenerator={() => navigateTo('linkGenerator')} 
                   onNavigateToHookGenerator={() => navigateTo('hookGenerator')} 
                   onNavigateToAngleGenerator={() => navigateTo('angleGenerator')}
-                  onNavigateToHashtagGenerator={() => navigateTo('hashtagGenerator')}
-                  onNavigateToVideoGenerator={() => navigateTo('videoGenerator')}
                   onNavigateToContentPlanner={() => navigateTo('contentPlanner')}
-                  onNavigateToMarketResearch={() => navigateTo('marketResearch')}
-                  onNavigateToImageStudio={() => navigateTo('imageStudio')}
-                  onNavigateToHook3Detik={() => navigateTo('hook3detik')}
                 />;
       case 'generator':
         return <ScriptGenerator initialData={initialGeneratorData} clearInitialData={() => setInitialGeneratorData(null)} onGenerateSuccess={(count) => showQuoteModal(count)} />;
@@ -219,24 +211,12 @@ const AppContent: React.FC = () => {
         return <LinkScriptGenerator onGenerateSuccess={(count) => showQuoteModal(count)} />;
       case 'hookGenerator':
         return <HookGeneratorView onGenerateSuccess={(count) => showQuoteModal(count)} />;
-      case 'hook3detik':
-        return <Hook3DetikGenerator onGenerateSuccess={(count) => showQuoteModal(count)} />;
       case 'angleGenerator':
         return <AngleGeneratorView onGenerateSuccess={(count) => showQuoteModal(count)} />;
-      case 'hashtagGenerator':
-        return <HashtagGeneratorView onGenerateSuccess={(count) => showQuoteModal(count)} />;
-      case 'videoGenerator':
-        return <VideoGeneratorView onGenerateSuccess={(count) => showQuoteModal(count)} />;
-      case 'imageStudio':
-        return <ImageStudioView onGenerateSuccess={(count) => showQuoteModal(count)} />;
       case 'contentPlanner':
         return <ContentPlannerView onUseContentPlanDay={handleUseContentPlanDay} onGenerateSuccess={(count) => showQuoteModal(count)} />;
-      case 'marketResearch':
-        return <MarketResearchView onUseProduct={handleUseResearchedProduct} onGenerateSuccess={(count) => showQuoteModal(count)} />;
       case 'history':
         return <HistoryView />;
-      case 'templates':
-        return <TemplatesView onUseTemplate={() => {}} />;
       case 'brandProfile':
         return <PersonalBrandView />;
       case 'admin-dashboard':
@@ -248,7 +228,7 @@ const AppContent: React.FC = () => {
       case 'admin-settings':
         return currentUser?.role === 'admin' ? <AdminDashboardView activeView="settings" /> : null;
       default:
-        return <HomeView currentUser={currentUser} onNavigateToGenerator={() => navigateTo('generator')} onNavigateToLinkGenerator={() => navigateTo('linkGenerator')} onNavigateToHookGenerator={() => navigateTo('hookGenerator')} onNavigateToAngleGenerator={() => navigateTo('angleGenerator')} onNavigateToHashtagGenerator={() => navigateTo('hashtagGenerator')} onNavigateToVideoGenerator={() => navigateTo('videoGenerator')} onNavigateToContentPlanner={() => navigateTo('contentPlanner')} onNavigateToMarketResearch={() => navigateTo('marketResearch')} onNavigateToImageStudio={() => navigateTo('imageStudio')} onNavigateToHook3Detik={() => navigateTo('hook3detik')} />;
+        return <HomeView currentUser={currentUser} />;
     }
   };
 
@@ -270,12 +250,12 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="flex h-screen bg-background text-text-primary font-sans">
-      <Sidebar currentView={currentView} setCurrentView={setCurrentView} currentUser={currentUser} />
+      <Sidebar currentView={currentView} setCurrentView={handleSetCurrentView} currentUser={currentUser} />
       <MobileMenu 
         isOpen={isMobileMenuOpen} 
         onClose={() => setIsMobileMenuOpen(false)}
         currentView={currentView} 
-        setCurrentView={setCurrentView} 
+        setCurrentView={handleSetCurrentView} 
         currentUser={currentUser}
       />
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -287,7 +267,7 @@ const AppContent: React.FC = () => {
             onBack={handleBack}
             onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         />
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
              <AnimatePresence mode="wait">
                 <motion.div
                     key={currentView}

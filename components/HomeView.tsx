@@ -27,12 +27,7 @@ interface HomeViewProps {
   onNavigateToLinkGenerator: () => void;
   onNavigateToHookGenerator: () => void;
   onNavigateToAngleGenerator: () => void;
-  onNavigateToHashtagGenerator: () => void;
-  onNavigateToVideoGenerator: () => void;
   onNavigateToContentPlanner: () => void;
-  onNavigateToMarketResearch: () => void;
-  onNavigateToImageStudio: () => void;
-  onNavigateToHook3Detik?: () => void;
 }
 
 // FIX: Explicitly typed variants with 'Variants' from framer-motion
@@ -72,7 +67,7 @@ const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; children: Re
   </motion.div>
 );
 
-export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGenerator, onNavigateToLinkGenerator, onNavigateToHookGenerator, onNavigateToAngleGenerator, onNavigateToHashtagGenerator, onNavigateToVideoGenerator, onNavigateToContentPlanner, onNavigateToMarketResearch, onNavigateToImageStudio, onNavigateToHook3Detik }) => {
+export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGenerator, onNavigateToLinkGenerator, onNavigateToHookGenerator, onNavigateToAngleGenerator, onNavigateToContentPlanner }) => {
   const [announcement, setAnnouncement] = useState<Announcement | null>(null);
 
   useEffect(() => {
@@ -113,11 +108,14 @@ export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGen
             Mulai Konversi.
           </span>
         </h1>
-        <p className="max-w-2xl mx-auto text-lg text-text-secondary mb-8">
+        <p className="max-w-2xl mx-auto text-lg text-text-secondary mb-4">
           Ubah ide jadi skrip video viral untuk TikTok Shop & Shopee Affiliate. Dirancang untuk FYP dan memaksimalkan konversi.
         </p>
+        <p className="max-w-2xl mx-auto text-md text-accent font-bold mb-8">
+          Pastikan setting Personal Brand agar hasil skrip sesuai gaya Anda.
+        </p>
         <motion.div 
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-row lg:flex-wrap items-center justify-center gap-4"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -125,7 +123,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGen
             <motion.div variants={itemVariants}>
                 <Button onClick={onNavigateToGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
                 <GenerateIcon className="mr-2" />
-                Buat Script
+                Buat Skrip Konten
                 </Button>
             </motion.div>
             <motion.div variants={itemVariants}>
@@ -134,18 +132,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGen
                     Perencana Konten AI
                 </Button>
             </motion.div>
-             <motion.div variants={itemVariants}>
-                <Button onClick={onNavigateToMarketResearch} size="lg" variant="secondary" className="w-full sm:w-auto">
-                    <SearchTrendingIcon className="mr-2" />
-                    Riset Pasar AI
-                </Button>
-             </motion.div>
-             <motion.div variants={itemVariants}>
-                <Button onClick={onNavigateToImageStudio} size="lg" variant="secondary" className="w-full sm:w-auto">
-                    <ImageEditIcon className="mr-2" />
-                    AI Image Studio
-                </Button>
-             </motion.div>
              <motion.div variants={itemVariants}>
                 <Button onClick={onNavigateToLinkGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
                     <LinkIcon className="mr-2" />
@@ -158,24 +144,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGen
                     Hook Generator
                 </Button>
              </motion.div>
-             {onNavigateToHook3Detik && (
-               <motion.div variants={itemVariants}>
-                 <Button onClick={onNavigateToHook3Detik} size="lg" variant="primary" className="w-full sm:w-auto shadow-lg shadow-accent/30">
-                     <SparklesIcon className="mr-2" />
-                     Hook 3 Detik AI
-                 </Button>
-               </motion.div>
-             )}
              <motion.div variants={itemVariants}>
                 <Button onClick={onNavigateToAngleGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
                     <CompassIcon className="mr-2" />
                     Angle Generator
-                </Button>
-             </motion.div>
-             <motion.div variants={itemVariants}>
-                <Button onClick={onNavigateToHashtagGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
-                    <HashtagIcon className="mr-2" />
-                    Hashtag Generator
                 </Button>
              </motion.div>
         </motion.div>
@@ -204,16 +176,8 @@ export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGen
           <FeatureCard icon={<MagnetIcon className="w-6 h-6" />} title="Generator Hook">
              Jangan pernah kehilangan penonton di 3 detik pertama. Dapatkan 10+ variasi hook kreatif untuk menemukan pembuka yang paling viral.
           </FeatureCard>
-          {onNavigateToHook3Detik && (
-            <FeatureCard icon={<SparklesIcon className="w-6 h-6" />} title="Hook 3 Detik AI">
-              Hook cerdas ala kreator Indonesia untuk konten afiliasi TikTok. Algoritma AI yang memahami trending phrases dan gaya natural kreator lokal.
-            </FeatureCard>
-          )}
            <FeatureCard icon={<CompassIcon className="w-6 h-6" />} title="Generator Angle Review">
             Buntu mau review dari sisi mana? Dapatkan 5+ sudut pandang unik untuk membahas produkmu agar tidak monoton.
-          </FeatureCard>
-          <FeatureCard icon={<HashtagIcon className="w-6 h-6" />} title="Generator Hashtag AI">
-            Maksimalkan jangkauan videomu. Dapatkan set hashtag yang relevan dan strategis, dikategorikan untuk audiens yang tepat.
           </FeatureCard>
            <FeatureCard icon={<LinkIcon className="w-6 h-6" />} title="Skrip dari Link Produk">
             Hanya butuh link produk? Tempel link-nya dan dapatkan skrip jadi dalam sekejap. Cepat, praktis, dan siap konversi.
@@ -223,12 +187,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGen
           </FeatureCard>
           <FeatureCard icon={<ClipboardListIcon />} title="Formula Copywriting Teruji">
             Manfaatkan formula legendaris seperti AIDA & PAS untuk menyusun skrip yang tidak hanya menarik perhatian, tapi juga mendorong penonton untuk checkout.
-          </FeatureCard>
-           <FeatureCard icon={<FilmIcon className="w-6 h-6" />} title="AI Video Studio">
-            Dari ide ke video dalam sekejap. Tuliskan prompt singkat dan biarkan AI membuatkan klip video pendek untuk Anda.
-          </FeatureCard>
-          <FeatureCard icon={<ImageEditIcon className="w-6 h-6" />} title="AI Image Studio">
-            Edit gambar dengan perintah teks sederhana. Ganti background, tambahkan teks promosi, atau perbaiki warna secara instan.
           </FeatureCard>
         </div>
       </motion.section>

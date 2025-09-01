@@ -34,9 +34,9 @@ export const DEFAULT_USERS: User[] = [
     directMessage: null,
   },
   {
-    id: '3',
-    username: 'user',
-    password: 'user',
+    id: '4',
+    username: 'smokervibe.id',
+    password: 'semoga_sukses',
     role: 'user',
     status: 'active',
     expiresAt: null,

@@ -114,9 +114,6 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, current
                 <NavItem view="hookGenerator" label="Hook Generator" currentView={currentView} onClick={setCurrentView}>
                     <MagnetIcon />
                 </NavItem>
-                <NavItem view="hook3detik" label="Hook 3 Detik AI" currentView={currentView} onClick={setCurrentView}>
-                    <SparklesIcon />
-                </NavItem>
                 <NavItem view="generator" label="Generator Script" currentView={currentView} onClick={setCurrentView}>
                     <GenerateIcon />
                 </NavItem>
@@ -125,21 +122,6 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, current
                 </NavItem>
                 <NavItem view="angleGenerator" label="Angle Generator" currentView={currentView} onClick={setCurrentView}>
                     <CompassIcon />
-                </NavItem>
-                <NavItem view="hashtagGenerator" label="Hashtag Generator" currentView={currentView} onClick={setCurrentView}>
-                    <HashtagIcon />
-                </NavItem>
-                 <NavItem view="videoGenerator" label="Video Studio" currentView={currentView} onClick={setCurrentView}>
-                    <FilmIcon />
-                </NavItem>
-                <NavItem view="imageStudio" label="Image Studio" currentView={currentView} onClick={setCurrentView}>
-                    <ImageEditIcon />
-                </NavItem>
-                <NavItem view="history" label="Riwayat Script" currentView={currentView} onClick={setCurrentView}>
-                    <HistoryIcon />
-                </NavItem>
-                <NavItem view="templates" label="Templates" currentView={currentView} onClick={setCurrentView}>
-                    <TemplatesIcon />
                 </NavItem>
               </>
             )}

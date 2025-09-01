@@ -1,11 +1,25 @@
-
-
 import React from 'react';
 import ThemeToggle from './ThemeToggle';
 import { View, User } from '../types';
 import Button from './ui/Button';
 import { BackIcon } from './icons/BackIcon';
+import { HomeIcon } from './icons/HomeIcon';
 import { MenuIcon } from './icons/MenuIcon';
+
+const VIEW_TITLES: { [key in View]?: string } = {
+    'home': 'Beranda',
+    'generator': 'Buat Skrip Konten',
+    'linkGenerator': 'Script dari Link Produk',
+    'hookGenerator': 'Hook Generator',
+    'angleGenerator': 'Angle Generator',
+    'history': 'Riwayat Script',
+    'brandProfile': 'Personal Brand',
+    'contentPlanner': 'Perencana Konten',
+    'admin-dashboard': 'Admin Dashboard',
+    'admin-intelligence': 'Intelijen Konten',
+    'admin-users': 'Manajemen Pengguna',
+    'admin-settings': 'Pengaturan Admin',
+};
 
 interface HeaderProps {
     currentUser: User | null;
@@ -22,10 +36,10 @@ export const Header: React.FC<HeaderProps> = ({ currentUser, onLogout, onGoHome,
     return (
         <header className="bg-card shadow-custom-sm p-4 flex justify-between items-center z-20 flex-shrink-0 border-b border-border">
             <div className="flex items-center gap-2 sm:gap-4">
-                 <button onClick={onToggleMobileMenu} className="p-2 md:hidden rounded-full hover:bg-secondary">
+                <button onClick={onToggleMobileMenu} className="p-2 md:hidden rounded-full hover:bg-secondary">
                     <MenuIcon />
                 </button>
-                 {canGoBack && (
+                {canGoBack && (
                     <Button onClick={onBack} variant="secondary" size="sm" className="hidden sm:inline-flex">
                         <BackIcon />
                         <span className="ml-1.5">Kembali</span>
