@@ -32,6 +32,7 @@ interface HomeViewProps {
   onNavigateToContentPlanner: () => void;
   onNavigateToMarketResearch: () => void;
   onNavigateToImageStudio: () => void;
+  onNavigateToHook3Detik?: () => void;
 }
 
 // FIX: Explicitly typed variants with 'Variants' from framer-motion
@@ -71,7 +72,7 @@ const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; children: Re
   </motion.div>
 );
 
-export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGenerator, onNavigateToLinkGenerator, onNavigateToHookGenerator, onNavigateToAngleGenerator, onNavigateToHashtagGenerator, onNavigateToVideoGenerator, onNavigateToContentPlanner, onNavigateToMarketResearch, onNavigateToImageStudio }) => {
+export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGenerator, onNavigateToLinkGenerator, onNavigateToHookGenerator, onNavigateToAngleGenerator, onNavigateToHashtagGenerator, onNavigateToVideoGenerator, onNavigateToContentPlanner, onNavigateToMarketResearch, onNavigateToImageStudio, onNavigateToHook3Detik }) => {
   const [announcement, setAnnouncement] = useState<Announcement | null>(null);
 
   useEffect(() => {
@@ -157,6 +158,14 @@ export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGen
                     Hook Generator
                 </Button>
              </motion.div>
+             {onNavigateToHook3Detik && (
+               <motion.div variants={itemVariants}>
+                 <Button onClick={onNavigateToHook3Detik} size="lg" variant="primary" className="w-full sm:w-auto shadow-lg shadow-accent/30">
+                     <SparklesIcon className="mr-2" />
+                     Hook 3 Detik AI
+                 </Button>
+               </motion.div>
+             )}
              <motion.div variants={itemVariants}>
                 <Button onClick={onNavigateToAngleGenerator} size="lg" variant="secondary" className="w-full sm:w-auto">
                     <CompassIcon className="mr-2" />
@@ -170,7 +179,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGen
                 </Button>
              </motion.div>
         </motion.div>
-      </section>
+        </motion.section>
 
       {/* Features Section */}
       <motion.section
@@ -195,6 +204,11 @@ export const HomeView: React.FC<HomeViewProps> = ({ currentUser, onNavigateToGen
           <FeatureCard icon={<MagnetIcon className="w-6 h-6" />} title="Generator Hook">
              Jangan pernah kehilangan penonton di 3 detik pertama. Dapatkan 10+ variasi hook kreatif untuk menemukan pembuka yang paling viral.
           </FeatureCard>
+          {onNavigateToHook3Detik && (
+            <FeatureCard icon={<SparklesIcon className="w-6 h-6" />} title="Hook 3 Detik AI">
+              Hook cerdas ala kreator Indonesia untuk konten afiliasi TikTok. Algoritma AI yang memahami trending phrases dan gaya natural kreator lokal.
+            </FeatureCard>
+          )}
            <FeatureCard icon={<CompassIcon className="w-6 h-6" />} title="Generator Angle Review">
             Buntu mau review dari sisi mana? Dapatkan 5+ sudut pandang unik untuk membahas produkmu agar tidak monoton.
           </FeatureCard>

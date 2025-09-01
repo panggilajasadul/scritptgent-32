@@ -8,6 +8,7 @@ import HistoryView from './components/HistoryView';
 import TemplatesView from './components/TemplatesView';
 import LinkScriptGenerator from './components/LinkScriptGenerator';
 import HookGeneratorView from './components/HookGeneratorView';
+import Hook3DetikGenerator from './components/Hook3DetikGenerator';
 import PersonalBrandView from './components/PersonalBrandView';
 import { HomeView } from './components/HomeView';
 import LoginView from './components/LoginView';
@@ -208,6 +209,7 @@ const AppContent: React.FC = () => {
                   onNavigateToContentPlanner={() => navigateTo('contentPlanner')}
                   onNavigateToMarketResearch={() => navigateTo('marketResearch')}
                   onNavigateToImageStudio={() => navigateTo('imageStudio')}
+                  onNavigateToHook3Detik={() => navigateTo('hook3detik')}
                 />;
       case 'generator':
         return <ScriptGenerator initialData={initialGeneratorData} clearInitialData={() => setInitialGeneratorData(null)} onGenerateSuccess={(count) => showQuoteModal(count)} />;
@@ -217,6 +219,8 @@ const AppContent: React.FC = () => {
         return <LinkScriptGenerator onGenerateSuccess={(count) => showQuoteModal(count)} />;
       case 'hookGenerator':
         return <HookGeneratorView onGenerateSuccess={(count) => showQuoteModal(count)} />;
+      case 'hook3detik':
+        return <Hook3DetikGenerator onGenerateSuccess={(count) => showQuoteModal(count)} />;
       case 'angleGenerator':
         return <AngleGeneratorView onGenerateSuccess={(count) => showQuoteModal(count)} />;
       case 'hashtagGenerator':
@@ -244,7 +248,7 @@ const AppContent: React.FC = () => {
       case 'admin-settings':
         return currentUser?.role === 'admin' ? <AdminDashboardView activeView="settings" /> : null;
       default:
-        return <HomeView currentUser={currentUser} onNavigateToGenerator={() => navigateTo('generator')} onNavigateToLinkGenerator={() => navigateTo('linkGenerator')} onNavigateToHookGenerator={() => navigateTo('hookGenerator')} onNavigateToAngleGenerator={() => navigateTo('angleGenerator')} onNavigateToHashtagGenerator={() => navigateTo('hashtagGenerator')} onNavigateToVideoGenerator={() => navigateTo('videoGenerator')} onNavigateToContentPlanner={() => navigateTo('contentPlanner')} onNavigateToMarketResearch={() => navigateTo('marketResearch')} onNavigateToImageStudio={() => navigateTo('imageStudio')} />;
+        return <HomeView currentUser={currentUser} onNavigateToGenerator={() => navigateTo('generator')} onNavigateToLinkGenerator={() => navigateTo('linkGenerator')} onNavigateToHookGenerator={() => navigateTo('hookGenerator')} onNavigateToAngleGenerator={() => navigateTo('angleGenerator')} onNavigateToHashtagGenerator={() => navigateTo('hashtagGenerator')} onNavigateToVideoGenerator={() => navigateTo('videoGenerator')} onNavigateToContentPlanner={() => navigateTo('contentPlanner')} onNavigateToMarketResearch={() => navigateTo('marketResearch')} onNavigateToImageStudio={() => navigateTo('imageStudio')} onNavigateToHook3Detik={() => navigateTo('hook3detik')} />;
     }
   };
 

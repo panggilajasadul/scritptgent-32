@@ -1,4 +1,4 @@
-export type View = 'home' | 'generator' | 'history' | 'templates' | 'linkGenerator' | 'hookGenerator' | 'brandProfile' | 'angleGenerator' | 'login' | 'hashtagGenerator' | 'videoGenerator' | 'contentPlanner' | 'admin-dashboard' | 'admin-users' | 'admin-settings' | 'admin-intelligence' | 'marketResearch' | 'imageStudio' | 'loading';
+export type View = 'home' | 'generator' | 'history' | 'templates' | 'linkGenerator' | 'hookGenerator' | 'brandProfile' | 'angleGenerator' | 'login' | 'hashtagGenerator' | 'videoGenerator' | 'contentPlanner' | 'admin-dashboard' | 'admin-users' | 'admin-settings' | 'admin-intelligence' | 'marketResearch' | 'imageStudio' | 'hook3detik' | 'loading';
 
 export type AdminView = 'dashboard' | 'users' | 'settings' | 'intelligence';
 export type PersonalBrandView = 'profile' | 'insights';

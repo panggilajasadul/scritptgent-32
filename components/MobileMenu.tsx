@@ -20,6 +20,7 @@ import { BrainCircuitIcon } from './icons/BrainCircuitIcon';
 import { SearchTrendingIcon } from './icons/SearchTrendingIcon';
 import { ImageEditIcon } from './icons/ImageEditIcon';
 import { KeyIcon } from './icons/KeyIcon';
+import { SparklesIcon } from './icons/SparklesIcon';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -112,6 +113,9 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, current
                 </NavItem>
                 <NavItem view="hookGenerator" label="Hook Generator" currentView={currentView} onClick={setCurrentView}>
                     <MagnetIcon />
+                </NavItem>
+                <NavItem view="hook3detik" label="Hook 3 Detik AI" currentView={currentView} onClick={setCurrentView}>
+                    <SparklesIcon />
                 </NavItem>
                 <NavItem view="generator" label="Generator Script" currentView={currentView} onClick={setCurrentView}>
                     <GenerateIcon />
